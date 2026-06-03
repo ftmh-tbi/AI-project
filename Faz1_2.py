@@ -1,18 +1,18 @@
-# from typing import List, Tuple, Optional, Set, Dict
-# import math
+from typing import List, Tuple, Optional, Set, Dict
+import math
 
 
-# class Node:
+class Node:
     
-#     def __init__(self, position: Tuple[int, int], g_cost: float = 0, 
-#                  h_cost: float = 0, parent: Optional['Node'] = None, 
-#                  action: Optional[str] = None, time_mod: int = 0):
-#         self.position = position
-#         self.g_cost = g_cost
-#         self.h_cost = h_cost
-#         self.parent = parent
-#         self.action = action
-#         self.time_mod = time_mod
+    def __init__(self, position: Tuple[int, int], g_cost: float = 0, 
+                 h_cost: float = 0, parent: Optional['Node'] = None, 
+                 action: Optional[str] = None, time_mod: int = 0):
+        self.position = position
+        self.g_cost = g_cost
+        self.h_cost = h_cost
+        self.parent = parent
+        self.action = action
+        self.time_mod = time_mod
     
 #     def f_cost(self) -> float:
 

@@ -57,27 +57,27 @@ class PriorityQueue:
         return len(self.elements)
 
 
-# class Map:
+class Map:
     
-#     def __init__(self, grid: List[List[str]]):
-#         self.grid = grid
-#         self.rows = len(grid)
-#         self.cols = len(grid[0]) if grid else 0
-#         self.start = None
-#         self.goal = None
-#         self.z_cells: Set[Tuple[int, int]] = set()
-#         self._parse_map()
+    def __init__(self, grid: List[List[str]]):
+        self.grid = grid
+        self.rows = len(grid)
+        self.cols = len(grid[0]) if grid else 0
+        self.start = None
+        self.goal = None
+        self.z_cells: Set[Tuple[int, int]] = set()
+        self._parse_map()
     
-#     def _parse_map(self):
-#         for i in range(self.rows):
-#             for j in range(self.cols):
-#                 cell = self.grid[i][j]
-#                 if cell == 'S' or cell.startswith('S'):
-#                     self.start = (i, j)
-#                 elif cell == 'G' or cell.startswith('G'):
-#                     self.goal = (i, j)
-#                 elif cell == 'Z':
-#                     self.z_cells.add((i, j))
+    def _parse_map(self):
+        for i in range(self.rows):
+            for j in range(self.cols):
+                cell = self.grid[i][j]
+                if cell == 'S' or cell.startswith('S'):
+                    self.start = (i, j)
+                elif cell == 'G' or cell.startswith('G'):
+                    self.goal = (i, j)
+                elif cell == 'Z':
+                    self.z_cells.add((i, j))
     
 #     def is_valid_position(self, pos: Tuple[int, int]) -> bool:
 #         x, y = pos

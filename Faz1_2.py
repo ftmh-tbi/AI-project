@@ -36,25 +36,25 @@ class Node:
         return hash(self.get_state())
 
 
-# class PriorityQueue:
+class PriorityQueue:
 
-#     def __init__(self):
-#         self.elements: List[Node] = []
+    def __init__(self):
+        self.elements: List[Node] = []
     
-#     def is_empty(self) -> bool:
-#         return len(self.elements) == 0
+    def is_empty(self) -> bool:
+        return len(self.elements) == 0
     
-#     def push(self, node: Node):
-#         self.elements.append(node)
-#         self.elements.sort(key=lambda n: n.f_cost())
+    def push(self, node: Node):
+        self.elements.append(node)
+        self.elements.sort(key=lambda n: n.f_cost())
     
-#     def pop(self) -> Node:
-#         if self.is_empty():
-#             raise IndexError("queue is empty")
-#         return self.elements.pop(0)
+    def pop(self) -> Node:
+        if self.is_empty():
+            raise IndexError("queue is empty")
+        return self.elements.pop(0)
     
-#     def size(self) -> int:
-#         return len(self.elements)
+    def size(self) -> int:
+        return len(self.elements)
 
 
 # class Map:

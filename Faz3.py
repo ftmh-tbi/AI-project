@@ -15,3 +15,21 @@ class Agent:
     
     def __repr__(self):
         return f"Agent({self.id}, {self.start_position})"
+class Chromosome:
+    
+    def __init__(self, genes: List[int]):
+
+        self.genes = genes
+        self.fitness = 0.0
+        self.makespan = float('inf')
+        self.agent_costs: Dict[int, float] = {}  
+    
+    def __repr__(self):
+        return f"Chromosome(genes={self.genes}, makespan={self.makespan:.2f})"
+    
+    def copy(self) -> 'Chromosome':
+        new_chrom = Chromosome(self.genes.copy())
+        new_chrom.fitness = self.fitness
+        new_chrom.makespan = self.makespan
+        new_chrom.agent_costs = self.agent_costs.copy()
+        return new_chrom

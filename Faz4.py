@@ -112,3 +112,122 @@ def a_star_phase4(map_obj: Map):
 
     return None
 
+class IDAStarSolver:
+
+    def __init__(self, map_obj: Map):
+        self.map = map_obj
+        self.goal = map_obj.goal
+        self.expanded = 0
+
+    def heuristic(self, pos) -> float:
+        return self.map.manhattan_distance(pos, self.goal)
+
+    def search(self):
+        """
+        Returns:
+            (actions, cost, expanded_nodes) یا None
+        """
+        if not self.map.start or not self.goal:
+            return None
+
+        start = self.map.start
+        start_bridge = get_bridge_num(self.map.grid[start[0]][start[1]])
+
+        cutoff = self.heuristic(start)
+        self.expanded = 0
+
+        while True:
+            visited: Set[Tuple] = {(start, start_bridge)}
+            path = [(start, None, 0.0, start_bridge)]
+
+            result = self._dfs(path, visited, cutoff)
+
+            if isinstance(result, list):
+                actions = [step[1] for step in result if step[1] is not None]
+                cost = result[-1][2]
+                return actions, cost, self.expanded
+
+            if result == float('inf'):
+                return None 
+
+            cutoff = result
+
+    def _dfs(self, path: List, visited: Set, cutoff: float):
+
+        pos, _, g, current_bridge = path[-1]
+        f = g + self.heuristic(pos)
+
+        if f > cutoff:
+            return f
+
+        if pos == self.goal:
+            return path
+
+        self.expanded += 1
+
+        min_t = float('inf')
+
+        for action, npos in self.map.get_neighbors(pos):
+            move_cost = get_cell_cost_phase4(self.map, npos, current_bridge)
+            if move_cost == float('inf'):
+                continue
+
+            ng = g + move_cost
+            new_bridge = get_bridge_num(self.map.grid[npos[0]][npos[1]])
+            state = (npos, new_bridge)
+
+            if state in visited:
+                continue
+
+            visited.add(state)
+            path.append((npos, action, ng, new_bridge))
+
+            result = self._dfs(path, visited, cutoff)
+
+            if isinstance(result, list):
+                return result
+            if result < min_t:
+                min_t = result
+
+            path.pop()
+            visited.discard(state)
+
+        return min_t
+def run_phase4_astar(input_text: str):
+    grid = parse_input(input_text)
+    map_obj = Map(grid)
+    result = a_star_phase4(map_obj)
+    if result:
+        actions, cost, expanded = result
+        print(f"Cost: {int(cost)} min")
+        print(f"Actions: {actions}")
+        print(f"Expanded nodes: {expanded}")
+    else:
+        print("path not found! ")
+
+
+def run_phase4_idastar(input_text: str):
+    grid = parse_input(input_text)
+    map_obj = Map(grid)
+    solver = IDAStarSolver(map_obj)
+    result = solver.search()
+    if result:
+        actions, cost, expanded = result
+        print(f"Cost: {int(cost)} min")
+        print(f"Actions: {actions}")
+        print(f"Expanded nodes: {expanded}")
+    else:
+        print("path not found! ")
+
+
+if __name__ == "__main__":
+
+    first = input().strip()          
+    rows = int(first.split()[0])     
+
+    test = first + "\n"              
+    for _ in range(rows):
+        test += input() + "\n"       
+
+    print("\n" + "=" * 50)
+    run_phase4_idastar(test)

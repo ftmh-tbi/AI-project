@@ -14,26 +14,26 @@ class Node:
         self.action = action
         self.time_mod = time_mod
     
-#     def f_cost(self) -> float:
+    def f_cost(self) -> float:
 
-#         return self.g_cost + self.h_cost
+        return self.g_cost + self.h_cost
     
-#     def get_state(self) -> Tuple:
+    def get_state(self) -> Tuple:
 
-#         return (self.position[0], self.position[1], self.time_mod)
+        return (self.position[0], self.position[1], self.time_mod)
     
-#     def __lt__(self, other: 'Node') -> bool:
+    def __lt__(self, other: 'Node') -> bool:
         
-#         if abs(self.f_cost() - other.f_cost()) > 1e-9:
-#             return self.f_cost() < other.f_cost()
+        if abs(self.f_cost() - other.f_cost()) > 1e-9:
+            return self.f_cost() < other.f_cost()
         
-#         return self.g_cost < other.g_cost
+        return self.g_cost < other.g_cost
     
-#     def __eq__(self, other: 'Node') -> bool:
-#         return self.get_state() == other.get_state()
+    def __eq__(self, other: 'Node') -> bool:
+        return self.get_state() == other.get_state()
     
-#     def __hash__(self):
-#         return hash(self.get_state())
+    def __hash__(self):
+        return hash(self.get_state())
 
 
 # class PriorityQueue:

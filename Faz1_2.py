@@ -79,59 +79,59 @@ class Map:
                 elif cell == 'Z':
                     self.z_cells.add((i, j))
     
-#     def is_valid_position(self, pos: Tuple[int, int]) -> bool:
-#         x, y = pos
-#         return 0 <= x < self.rows and 0 <= y < self.cols
+    def is_valid_position(self, pos: Tuple[int, int]) -> bool:
+        x, y = pos
+        return 0 <= x < self.rows and 0 <= y < self.cols
     
-#     def get_cell_cost(self, pos: Tuple[int, int], time: float) -> float:
+    def get_cell_cost(self, pos: Tuple[int, int], time: float) -> float:
         
-#         if not self.is_valid_position(pos):
-#             return float('inf')
+        if not self.is_valid_position(pos):
+            return float('inf')
         
-#         x, y = pos
-#         cell = self.grid[x][y]
+        x, y = pos
+        cell = self.grid[x][y]
         
-#         if cell == 'S' or cell.startswith('S') or cell == 'G' or cell.startswith('G'):
-#             return 1.0
+        if cell == 'S' or cell.startswith('S') or cell == 'G' or cell.startswith('G'):
+            return 1.0
         
-#         if cell == 'Z':
-#             time_mod = int(time) % 30
-#             return 1.0 if time_mod < 15 else 15.0
+        if cell == 'Z':
+            time_mod = int(time) % 30
+            return 1.0 if time_mod < 15 else 15.0
         
-#         if cell.isdigit():
-#             return float(cell)
+        if cell.isdigit():
+            return float(cell)
         
-#         if cell.startswith('B'):
-#             try:
-#                 return float(cell[1:])
-#             except ValueError:
-#                 return float('inf')
+        if cell.startswith('B'):
+            try:
+                return float(cell[1:])
+            except ValueError:
+                return float('inf')
         
-#         return float('inf')
+        return float('inf')
     
 
-#     def get_neighbors(self, pos: Tuple[int, int]) -> List[Tuple[str, Tuple[int, int]]]:
-#         neighbors = []
-#         x, y = pos
+    def get_neighbors(self, pos: Tuple[int, int]) -> List[Tuple[str, Tuple[int, int]]]:
+        neighbors = []
+        x, y = pos
     
-#         directions = {
-#         'RIGHT': (0, 1), 'LEFT': (0, -1),
-#         'UP': (-1, 0), 'DOWN': (1, 0)
-#         }
+        directions = {
+        'RIGHT': (0, 1), 'LEFT': (0, -1),
+        'UP': (-1, 0), 'DOWN': (1, 0)
+        }
     
-#         if self.z_cells:
-#             directions['STAY'] = (0, 0)
+        if self.z_cells:
+            directions['STAY'] = (0, 0)
         
-#         for action, (dx, dy) in directions.items():
-#             new_pos = (x + dx, y + dy)
-#             if self.is_valid_position(new_pos):
-#                 neighbors.append((action, new_pos))
+        for action, (dx, dy) in directions.items():
+            new_pos = (x + dx, y + dy)
+            if self.is_valid_position(new_pos):
+                neighbors.append((action, new_pos))
         
-#         return neighbors
+        return neighbors
 
     
-#     def manhattan_distance(self, pos1: Tuple[int, int], pos2: Tuple[int, int]) -> float:
-#         return abs(pos1[0] - pos2[0]) + abs(pos1[1] - pos2[1])
+    def manhattan_distance(self, pos1: Tuple[int, int], pos2: Tuple[int, int]) -> float:
+        return abs(pos1[0] - pos2[0]) + abs(pos1[1] - pos2[1])
 
 
 # class SearchEngine:

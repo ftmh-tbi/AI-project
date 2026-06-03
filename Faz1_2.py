@@ -313,16 +313,16 @@ def run_phase2_astar(input_text: str):
 
 
 
-# if __name__ == "__main__":
-#     print("enter input:\n")
+if __name__ == "__main__":
+    print("enter input:\n")
 
-#     first = input().strip()         
-#     rows = int(first.split()[0])  
+    first = input().strip()         
+    rows = int(first.split()[0])  
 
-#     test = first + "\n"            
-#     for _ in range(rows):
-#         test += input() + "\n"      
+    test = first + "\n"            
+    for _ in range(rows):
+        test += input() + "\n"      
 
-#     print("\n" + "=" * 50)
-#     run_phase1_ucs(test)
-#     run_phase2_astar(test)
+    print("\n" + "=" * 50)
+    run_phase1_ucs(test)
+    run_phase2_astar(test)

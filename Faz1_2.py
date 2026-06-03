@@ -134,182 +134,182 @@ class Map:
         return abs(pos1[0] - pos2[0]) + abs(pos1[1] - pos2[1])
 
 
-# class SearchEngine:
+class SearchEngine:
     
-#     def __init__(self, map_obj: Map):
-#         self.map = map_obj
-#         self.expanded_nodes = 0
+    def __init__(self, map_obj: Map):
+        self.map = map_obj
+        self.expanded_nodes = 0
     
-#     def reconstruct_path(self, node: Node) -> Tuple[List[str], float]:
-#         actions = []
-#         current = node
+    def reconstruct_path(self, node: Node) -> Tuple[List[str], float]:
+        actions = []
+        current = node
         
-#         while current.parent is not None:
-#             if current.action:
-#                 actions.append(current.action)
-#             current = current.parent
+        while current.parent is not None:
+            if current.action:
+                actions.append(current.action)
+            current = current.parent
         
-#         actions.reverse()
-#         return actions, node.g_cost
+        actions.reverse()
+        return actions, node.g_cost
     
-#     def uniform_cost_search(self) -> Optional[Tuple[List[str], float, int]]:
-#         if not self.map.start or not self.map.goal:
-#             return None
+    def uniform_cost_search(self) -> Optional[Tuple[List[str], float, int]]:
+        if not self.map.start or not self.map.goal:
+            return None
         
-#         start_node = Node(self.map.start, g_cost=0, time_mod=0)
-#         frontier = PriorityQueue()
-#         frontier.push(start_node)
+        start_node = Node(self.map.start, g_cost=0, time_mod=0)
+        frontier = PriorityQueue()
+        frontier.push(start_node)
         
-#         visited: Set[Tuple] = set()
-#         self.expanded_nodes = 0
+        visited: Set[Tuple] = set()
+        self.expanded_nodes = 0
         
-#         while not frontier.is_empty():
-#             current = frontier.pop()
+        while not frontier.is_empty():
+            current = frontier.pop()
             
-#             if current.position == self.map.goal:
-#                 actions, cost = self.reconstruct_path(current)
-#                 return actions, cost, self.expanded_nodes
+            if current.position == self.map.goal:
+                actions, cost = self.reconstruct_path(current)
+                return actions, cost, self.expanded_nodes
             
-#             state = current.get_state()
-#             if state in visited:
-#                 continue
+            state = current.get_state()
+            if state in visited:
+                continue
             
-#             visited.add(state)
-#             self.expanded_nodes += 1
+            visited.add(state)
+            self.expanded_nodes += 1
             
-#             for action, new_pos in self.map.get_neighbors(current.position):
-#                 current_time = current.g_cost
+            for action, new_pos in self.map.get_neighbors(current.position):
+                current_time = current.g_cost
                 
-#                 move_cost = self.map.get_cell_cost(new_pos, current_time)
+                move_cost = self.map.get_cell_cost(new_pos, current_time)
 
-#                 if move_cost == float('inf'):
-#                     continue
+                if move_cost == float('inf'):
+                    continue
                 
-#                 new_g_cost = current.g_cost + move_cost
-#                 new_time_mod = int(new_g_cost) % 30
+                new_g_cost = current.g_cost + move_cost
+                new_time_mod = int(new_g_cost) % 30
                 
-#                 new_node = Node(
-#                     position=new_pos,
-#                     g_cost=new_g_cost,
-#                     parent=current,
-#                     action=action,
-#                     time_mod=new_time_mod
-#                 )
+                new_node = Node(
+                    position=new_pos,
+                    g_cost=new_g_cost,
+                    parent=current,
+                    action=action,
+                    time_mod=new_time_mod
+                )
                 
-#                 if new_node.get_state() not in visited:
-#                     frontier.push(new_node)
+                if new_node.get_state() not in visited:
+                    frontier.push(new_node)
         
-#         return None
+        return None
     
-#     def a_star_search(self, heuristic_func=None) -> Optional[Tuple[List[str], float, int]]:
-#         if not self.map.start or not self.map.goal:
-#             return None
+    def a_star_search(self, heuristic_func=None) -> Optional[Tuple[List[str], float, int]]:
+        if not self.map.start or not self.map.goal:
+            return None
         
-#         if heuristic_func is None:
-#             heuristic_func = lambda pos: self.map.manhattan_distance(pos, self.map.goal)
+        if heuristic_func is None:
+            heuristic_func = lambda pos: self.map.manhattan_distance(pos, self.map.goal)
         
-#         start_node = Node(
-#             self.map.start, 
-#             g_cost=0, 
-#             h_cost=heuristic_func(self.map.start),
-#             time_mod=0
-#         )
-#         frontier = PriorityQueue()
-#         frontier.push(start_node)
+        start_node = Node(
+            self.map.start, 
+            g_cost=0, 
+            h_cost=heuristic_func(self.map.start),
+            time_mod=0
+        )
+        frontier = PriorityQueue()
+        frontier.push(start_node)
         
-#         visited: Set[Tuple] = set()
-#         self.expanded_nodes = 0
+        visited: Set[Tuple] = set()
+        self.expanded_nodes = 0
         
-#         while not frontier.is_empty():
-#             current = frontier.pop()
+        while not frontier.is_empty():
+            current = frontier.pop()
             
-#             if current.position == self.map.goal:
-#                 actions, cost = self.reconstruct_path(current)
-#                 return actions, cost, self.expanded_nodes
+            if current.position == self.map.goal:
+                actions, cost = self.reconstruct_path(current)
+                return actions, cost, self.expanded_nodes
             
-#             state = current.get_state()
-#             if state in visited:
-#                 continue
+            state = current.get_state()
+            if state in visited:
+                continue
             
-#             visited.add(state)
-#             self.expanded_nodes += 1
+            visited.add(state)
+            self.expanded_nodes += 1
             
-#             for action, new_pos in self.map.get_neighbors(current.position):
-#                 current_time = current.g_cost
+            for action, new_pos in self.map.get_neighbors(current.position):
+                current_time = current.g_cost
                 
-#                 move_cost = self.map.get_cell_cost(new_pos, current_time)
+                move_cost = self.map.get_cell_cost(new_pos, current_time)
 
-#                 if move_cost == float('inf'):
-#                     continue
+                if move_cost == float('inf'):
+                    continue
                 
-#                 new_g_cost = current.g_cost + move_cost
-#                 new_h_cost = heuristic_func(new_pos)
-#                 new_time_mod = int(new_g_cost) % 30
+                new_g_cost = current.g_cost + move_cost
+                new_h_cost = heuristic_func(new_pos)
+                new_time_mod = int(new_g_cost) % 30
                 
-#                 new_node = Node(
-#                     position=new_pos,
-#                     g_cost=new_g_cost,
-#                     h_cost=new_h_cost,
-#                     parent=current,
-#                     action=action,
-#                     time_mod=new_time_mod
-#                 )
+                new_node = Node(
+                    position=new_pos,
+                    g_cost=new_g_cost,
+                    h_cost=new_h_cost,
+                    parent=current,
+                    action=action,
+                    time_mod=new_time_mod
+                )
                 
-#                 if new_node.get_state() not in visited:
-#                     frontier.push(new_node)
+                if new_node.get_state() not in visited:
+                    frontier.push(new_node)
         
-#         return None
-
-
-# def parse_input(input_text: str) -> List[List[str]]:
-    
-#     lines = input_text.strip().split('\n')
-#     n, m = map(int, lines[0].split())
-    
-#     grid = []
-#     for i in range(1, n + 1):
-#         row = lines[i].split()
-#         grid.append(row)
-    
-#     return grid
+        return None
 
 
-# def run_phase1_ucs(input_text: str):
+def parse_input(input_text: str) -> List[List[str]]:
     
-#     print("=== phase1: Uniform Cost Search ===\n")
+    lines = input_text.strip().split('\n')
+    n, m = map(int, lines[0].split())
     
-#     grid = parse_input(input_text)
-#     map_obj = Map(grid)
-#     search_engine = SearchEngine(map_obj)
+    grid = []
+    for i in range(1, n + 1):
+        row = lines[i].split()
+        grid.append(row)
     
-#     result = search_engine.uniform_cost_search()
-    
-#     if result:
-#         actions, cost, expanded = result
-#         print(f"Cost: {int(cost)} min")
-#         print(f"Actions: {actions}")
-#         print(f"Expanded nodes: {expanded}")
-#     else:
-#         print("path not found!")
+    return grid
 
 
-# def run_phase2_astar(input_text: str):
+def run_phase1_ucs(input_text: str):
     
-#     print("\n=== phase2: A* Search ===\n")
+    print("=== phase1: Uniform Cost Search ===\n")
     
-#     grid = parse_input(input_text)
-#     map_obj = Map(grid)
-#     search_engine = SearchEngine(map_obj)
+    grid = parse_input(input_text)
+    map_obj = Map(grid)
+    search_engine = SearchEngine(map_obj)
     
-#     result = search_engine.a_star_search()
+    result = search_engine.uniform_cost_search()
     
-#     if result:
-#         actions, cost, expanded = result
-#         print(f"Cost: {int(cost)} min")
-#         print(f"Actions: {actions}")
-#         print(f"Expanded nodes: {expanded}")
-#     else:
-#         print("path not found!")
+    if result:
+        actions, cost, expanded = result
+        print(f"Cost: {int(cost)} min")
+        print(f"Actions: {actions}")
+        print(f"Expanded nodes: {expanded}")
+    else:
+        print("path not found!")
+
+
+def run_phase2_astar(input_text: str):
+    
+    print("\n=== phase2: A* Search ===\n")
+    
+    grid = parse_input(input_text)
+    map_obj = Map(grid)
+    search_engine = SearchEngine(map_obj)
+    
+    result = search_engine.a_star_search()
+    
+    if result:
+        actions, cost, expanded = result
+        print(f"Cost: {int(cost)} min")
+        print(f"Actions: {actions}")
+        print(f"Expanded nodes: {expanded}")
+    else:
+        print("path not found!")
 
 
 

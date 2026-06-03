@@ -252,3 +252,16 @@ def run_phase3_genetic(input_text: str, population_size: int = 100,
     ga.print_solution(best_solution)
 
     return best_solution, history
+
+if __name__ == "__main__":
+    print("enter input:\n")
+
+    first = input().strip()         
+    rows = int(first.split()[0])     
+
+    test = first + "\n"          
+    for _ in range(rows):
+        test += input() + "\n"      
+
+    print("\n" + "=" * 50)
+    run_phase3_genetic(test, population_size=80, generations=150)
